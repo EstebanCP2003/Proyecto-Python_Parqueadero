@@ -1,6 +1,9 @@
 import unittest
-from parqueadero import RegistroParqueadero
 from datetime import datetime, timedelta
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from src.parqueadero import RegistroParqueadero
 
 class TestRegistroParqueadero(unittest.TestCase):
 

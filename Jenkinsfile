@@ -1,25 +1,47 @@
+
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'python:3.11'
+            args '-u root'
+        }
+    }
+
     stages {
-        stage('Clonar repositorio') {
+        stage('Preparar entorno') {
             steps {
-                git 'https://github.com/EstebanCP2003/Proyecto-Python_Parqueadero.git'
+                sh '''
+                    pip install --upgrade pip
+                    pip install unittest2
+                    pip install pytest
+                    pip install customtkinter
+                    pip install unittest-xml-reporting
+                '''
             }
         }
-        stage('Instalar dependencias') {
-            steps {
-                sh 'pip install -r requirements.txt || true'
-            }
-        }
+
         stage('Ejecutar pruebas') {
             steps {
-                sh 'python -m unittest discover tests'
+                sh '''
+                    python -m unittest discover -s tests -p "test_*.py" 
+                '''
+            }
+        }
+
+        stage('Generar reportes') {
+            steps {
+                sh '''
+                    mkdir -p tests/reports
+                    python -m xmlrunner discover -s tests -p "test_*.py" -o tests/reports
+                '''
             }
         }
     }
+
     post {
         always {
-            junit 'tests/*.xml' // si generas reporte JUnit
+            echo "Pipeline finalizado"
+            junit 'tests/reports/*.xml'
         }
     }
 }
