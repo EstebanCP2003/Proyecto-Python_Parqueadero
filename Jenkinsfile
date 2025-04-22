@@ -1,14 +1,19 @@
 
 pipeline {
-    agent {
-        docker {
-            image 'python:3.11'
-            args '-u root'
-        }
+
+    agent{
+        label 'agent1'
     }
 
     stages {
         stage('Preparar entorno') {
+
+            agent {
+                docker {
+                    image 'python:3.11'
+                    args '-u root'
+                }
+            }
             steps {
                 sh '''
                     pip install --upgrade pip
