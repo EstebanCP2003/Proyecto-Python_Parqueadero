@@ -7,10 +7,9 @@ pipeline {
 
     stages {
         stage('Preparar entorno') {
-            
+
             steps {
                 sh '''
-                    python3 -m pip install --upgrade pip
                     pip install --upgrade pip
                     pip install unittest2
                     pip install pytest
