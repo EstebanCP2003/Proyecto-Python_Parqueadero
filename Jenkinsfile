@@ -29,7 +29,7 @@ pipeline {
                 sh '''
                     . venv/bin/activate
                     mkdir -p tests/reports
-                    python -m xmlrunner discover -s tests -p "test_*.py" -o tests/reports
+                    python -m xmlrunner discover -s tests -p "*.py" -o tests/reports
                 '''
             }
         }
