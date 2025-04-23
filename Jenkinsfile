@@ -1,7 +1,5 @@
 pipeline {
-    agent {
-        label 'agent1'
-    }
+    agent any // Utiliza cualquier agente disponible
 
     stages {
         stage('Preparar entorno') {
